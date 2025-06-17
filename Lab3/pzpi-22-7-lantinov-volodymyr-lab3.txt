@@ -1,0 +1,1239 @@
+﻿Міністерство освіти і науки України Харківський національний університет радіоелектроніки
+
+Кафедра програмної інженерії
+
+Звіт
+З лабораторної роботи №3
+З дисципліни «Архітектура програмного забезпечення» на тему: «РОЗРОБКА ВЕБКЛІЄНТА СИСТЕМИ»
+
+Виконавець:
+ст. гр. ПЗПІ-22-7							Лантінов Володимир.
+
+Перевірив:
+ст. викладач каф. ПІ						Сокорчук І. П.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Харків 2025
+ 
+1	ІСТОРІЯ ЗМІН
+
+
+№	Дата	Версія звіту	Опис	змін	та
+виправлень
+1	19.05.2025	0.1	Створено структуру звіту. Визначено завдання	на
+лабораторну роботу
+2	24.05.2025	0.1	Описано хід роботи, додаток А, додаток Б, додаток В. Сформульовано
+висновок роботи
+
+2	ЗАВДАННЯ
+
+Метою даного лабораторного заняття є розробка клієнтської / front- end частини програмної системи.
+
+3	ОПИС ВИКОНАНОЇ РОБОТИ
+
+До виконаної роботи було створено відеозвіт, посилання на який наведено у додатку А.
+Усі графічні матеріали наведені у додатку Б.
+У рамках виконання завдання було розроблено клієнтську частину вебдодатку з використанням бібліотеки React, що забезпечило створення інтерактивного та функціонального інтерфейсу для мониторингу транспортних засобів. Робота розпочалася з ініціалізації проєкту, під час якої було налаштовано базову структуру додатку з інтеграцією Framer Motion для анімацій.
+Основна увага під час розробки була зосереджена на забезпеченні зручності та інтуїтивності інтерфейсу, а також на реалізації ключових функціональних можливостей системи мониторингу. Було впроваджено компоненти для відображення телеметричних даних транспортних засобів, real-time моніторингу через MQTT протокол, системи алертів, а також аналітичних дашбордів з графіками Recharts для власників ТЗ. Окремо реалізовано функціонал адміністрування, який дозволяє управляти користувачами, ролями доступу до транспортних засобів, створювати та відновлювати резервні копії бази даних MongoDB.
+Значна частина роботи була присвячена впровадженню локалізації з використанням бібліотеки react-i18next. Для кожної сторінки створено набір перекладів на англійську та українську мови, що дозволило адаптувати інтерфейс до потреб багатомовних користувачів системи мониторингу транспорту.
+Для забезпечення візуальної привабливості та зручності використання було розроблено стилі з урахуванням принципів Material Design, які застосовувалися до всіх компонентів. Стилі були створені з акцентом на сучасний дизайн, адаптивність та єдність стилістичного оформлення, що узгоджується з Android додатком на Kotlin з Material Design 3. У результаті виконаної роботи було створено функціональний вебдодаток із зручним інтерфейсом для мониторингу ТЗ, підтримкою локалізації, AI рекомендаціями та можливостями адміністрування, що відповідає поставленим вимогам IoT системи управління транспортними засобами
+Деякий код застосунку наведено у додатку В.
+
+Використані технології для веб-інтерфейсу
+Для розробки клієнтської частини системи мониторингу та управління транспортними засобами було обрано сучасний технологічний стек, який забезпечує високу продуктивність, зручність користування та можливість масштабування:
+Основний фреймворк:
+•	React 18.2.0 - провідна JavaScript бібліотека для побудови користувацького інтерфейсу, що забезпечує компонентний підхід до розробки та ефективне управління станом додатку
+Маршрутизація та навігація:
+•	React Router DOM 6.20.1 - стандартне рішення для організації клієнтської маршрутизації в одностороінкових додатках (SPA)
+Мережева взаємодія:
+•	Axios 1.6.2 - HTTP клієнт для здійснення запитів до REST API серверної частини системи з підтримкою перехоплювачів та обробки помилок
+Візуалізація та анімація:
+•	Framer Motion 10.16.16 - бібліотека для створення плавних анімацій та переходів, що покращує користувацький досвід
+•	Lucide React 0.294.0 - модульна система векторних іконок для консистентного візуального оформлення
+•	Recharts 2.8.0 - спеціалізована бібліотека для побудови інтерактивних графіків та діаграм аналітичних даних транспортних засобів
+Стилізація:
+•	Tailwind CSS - utility-first CSS фреймворк для швидкої та консистентної стилізації компонентів
+Інструментарій розробки:
+•	Vite - сучасний інструмент збірки та локальної розробки з підтримкою швидкого Hot Module Replacement (HMR)
+Обраний технологічний стек забезпечує створення responsive веб-додатку з високою продуктивністю, що повністю відповідає функціональним вимогам IoT платформи.
+
+Архітектура системи
+ 
+Рисунок 1 - Загальна структура додатка
+
+ 
+Рисунок 2 - Архітектура компонентів
+
+Прийняті інженерні рішення
+1. Архітектурні рішення
+Управління станом додатку на основі Context API:
+Для централізованого управління станом системи мониторингу транспортних засобів реалізовано наступні контексти:
+•	AuthContext - забезпечує централізоване управління аутентифікацією користувачів, включаючи автоматичну перевірку JWT токенів та обробку сесій
+•	LanguageContext - реалізує підтримку двомовного інтерфейсу (українська/англійська) з динамічним перемиканням локалізації
+Система захищених маршрутів:
+Впроваджено роле-орієнтовану систему доступу з наступною логікою:
+const ProtectedRoute = ({ children, requireAdmin = false }) => {
+  const { user, loading, isAdmin } = useAuth();
+  
+  if (!user) return <Navigate to="/login" replace />;
+  if (requireAdmin && !isAdmin()) return <Navigate to="/dashboard" replace />;
+  
+  return children;
+};
+Архітектура кастомних хуків:
+Розроблено спеціалізовані React хуки для інкапсуляції бізнес-логіки:
+•	useAuth - управління аутентифікацією та авторизацією
+•	useVehicles - операції з транспортними засобами та алертами
+•	useLanguage - локалізація інтерфейсу
+
+2. Організація API взаємодії
+Централізований HTTP клієнт:
+Створено уніфікований Axios інстанс з базовою конфігурацією для взаємодії з серверною частиною:
+const api = axios.create({
+  baseURL: API_BASE_URL,
+  headers: { 'Content-Type': 'application/json' }
+});
+Автоматизована обробка аутентифікації:
+Реалізовано систему інтерсепторів для:
+•	Автоматичного додавання Bearer токенів до запитів
+•	Глобальної обробки помилок 401 (Unauthorized)
+•	Перенаправлення користувачів при втраті сесії
+Модульна структура API сервісів:
+API організовано за функціональними модулями:
+•	vehicleAPI - операції з транспортними засобами
+•	alertAPI - управління системою сповіщень
+•	analyticsAPI - аналітичні дані та звіти
+•	authService - аутентифікація користувачів
+
+3. Компонентна архітектура
+Переваги обраного підходу:
+•	Модульність - кожен компонент має чітко визначену відповідальність
+•	Реюзабельність - компоненти UI можуть використовуватися в різних частинах додатку
+•	Тестованість - ізольовані хуки та сервіси легко покривати unit-тестами
+•	Масштабованість - архітектура дозволяє легко додавати нову функціональність
+•	Локалізація - підтримка багатомовності на рівні архітектури
+Утилітарні модулі:
+Розроблено допоміжні модулі для:
+•	Форматування дат, чисел та одиниць вимірювання (formatters.js)
+•	Управління перекладами інтерфейсу (translations.js)
+•	Кольорове кодування статусів та рівнів важливості
+Дана архітектура забезпечує високу продуктивність, зручність розробки та легкість підтримки веб-інтерфейсу системи мониторингу транспортних засобів.
+
+ 
+Рисунок 3 - Схема взаємодії користувацької частини
+
+Користувацький інтерфейс
+1. Дизайн-система
+Колірна палітра системи мониторингу транспортних засобів:
+Для забезпечення консистентного візуального оформлення веб-інтерфейсу розроблено централізовану систему кольорів:
+•	Primary Dark (#403D58) - основний темно-фіолетовий колір для фонових елементів
+•	Primary Light (#878E88) - сірий колір для допоміжних елементів та текстів
+•	Accent Purple (#EFCEFA) - світло-фіолетовий для акцентних елементів
+•	Accent Green (#D8F1A0) - світло-зелений для індикації успішних станів
+•	Accent Red (#FE5E41) - червоно-оранжевий для критичних сповіщень та активних елементів
+Система компонентів UI:
+.glass {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+Реалізовано уніфіковану систему компонентів, що включає:
+•	Glassmorphism ефекти для карточок та модальних вікон
+•	Кастомні кнопки з градієнтними переходами та hover-ефектами
+•	Адаптивні карточки транспортних засобів з real-time індикаторами стану
+•	Системні компоненти завантаження з пульсуючими анімаціями
+
+2. Адаптивна архітектура
+Responsive Grid система:
+Інтерфейс побудовано на основі Tailwind CSS з використанням flexbox та CSS Grid:
+<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+  {/* Адаптивні карточки */}
+</div>
+Багаторівнева адаптивність:
+•	Мобільні пристрої (< 768px) - одноколонкова компоновка
+•	Планшети (768-1024px) - двоколонкова сітка
+•	Десктоп (> 1024px) - триколонкова та складніші макети
+Адаптивна навігація:
+•	Sidebar з автоматичним згортанням на мобільних пристроях
+•	Responsive таблиці з горизонтальним скролом для великих наборів даних
+•	Динамічне масштабування графіків та діаграм
+
+3. Анімації та інтерактивні ефекти
+Framer Motion інтеграція:
+Реалізовано комплексну систему анімацій для покращення користувацького досвіду:
+<motion.div
+  initial={{ opacity: 0, y: 20 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.6 }}
+>
+Типи анімацій:
+•	Fade In Up - для появи контенту сторінок
+•	Staggered animations - послідовна анімація елементів списків
+•	Hover micro-interactions - інтерактивні ефекти при наведенні на кнопки та карточки
+•	Page transitions - плавні переходи між розділами додатку
+Кастомні CSS анімації:
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+Візуалізація даних:
+Інтегровано Recharts бібліотеку для створення інтерактивних графіків:
+•	Адаптивні лінійні графіки для відображення даних транспортних засобів
+•	Кругові діаграми для аналітики використання системи
+•	Стовпчикові графіки для порівняльного аналізу
+Система користувацького інтерфейсу забезпечує інтуїтивну взаємодію з платформою мониторингу транспортних засобів та підтримує високі стандарти сучасного веб-дизайну.
+ 
+
+Рисунок 4 - UML діаграма компонент (Component Diagram)
+ 
+Рисунок 5 - UML діаграма компонент
+
+Activity Diagram
+Демонструє повний процес управління пристроями:
+1.	Аутентифікація - перевірка авторизації користувача
+2.	Завантаження даних - отримання списку пристроїв
+3.	CRUD операції - створення, редагування, видалення пристроїв
+4.	Керування пристроями - включення/вимкнення, встановлення лімітів
+Моніторинг - перегляд даних споживання та статистики
+
+ВИСНОВКИ
+
+У результаті виконання даної лабораторної роботи було розроблено клієнтську частину вебдодатку на базі React, що включає зручний інтерфейс для взаємодії з користувачами системи мониторингу транспортних засобів. Створено ключові сторінки, зокрема домашню, авторизацію, реєстрацію, а також панелі адміністрування, які дозволяють ефективно управляти користувачами, транспортними засобами, телеметричними даними та системними налаштуваннями IoT мониторингу.
+Реалізовано спеціалізовані компоненти для відображення real-time даних через MQTT протокол, інтерактивні дашборди з графіками Recharts для аналізу телеметрії, а також інтеграцію з Google Gemini AI для генерації персоналізованих рекомендацій по обслуговуванню транспортних засобів. Впроваджено систему багаторівневих алертів з можливістю відхилення та вирішення критичних сповіщень.
+Особливу увагу приділено реалізації локалізації, що забезпечує підтримку англійської та української мов, а також адаптацію відображення телеметричних даних, таких як температура двигуна, рівень палива та швидкість, залежно від обраної мови. Використано Framer Motion для створення плавних анімацій та переходів, що покращує користувацький досвід при навігації між сторінками моніторингу різних транспортних засобів.
+ 
+ДОДАТОК А
+Відеозапис
+
+Відеозапис презентації результатів лабораторної роботи:
+
+
+Хронологічний опис відеозапису:
+ 
+ДОДАТОК Б
+Графічні матеріали
+
+ 
+Рисунок Б.1 — UML діаграма компонентів
+ 
+ 
+Рисунок Б.2 – UML діаграма взаємодії.  
+ДОДАТОК В
+Програмний код
+
+
+В.1 Математична обробка прикладних даних.
+GitHub репозиторій: 
+import { useState, useEffect } from 'react'
+import { useParams, useNavigate } from 'react-router-dom'
+import { motion } from 'framer-motion'
+import { useLanguage } from '../contexts/LanguageContext'
+import { vehicleAPI } from '../services/api'
+import Header from '../components/Header'
+import Sidebar from '../components/Sidebar'
+import LoadingSpinner from '../components/LoadingSpinner'
+import { 
+  LineChart, 
+  Line, 
+  XAxis, 
+  YAxis, 
+  CartesianGrid, 
+  Tooltip, 
+  ResponsiveContainer 
+} from 'recharts'
+import { 
+  ArrowLeft,
+  Power,
+  ShieldAlert,
+  Thermometer,
+  Fuel,
+  Gauge,
+  Brain,
+  PlayCircle,
+  StopCircle,
+  AlertTriangle,
+  Copy,
+  Check
+} from 'lucide-react'
+import toast from 'react-hot-toast'
+
+const VehicleDetails = () => {
+  const { deviceId } = useParams()
+  const navigate = useNavigate()
+  const { t } = useLanguage()
+  const [vehicle, setVehicle] = useState(null)
+  const [vehicleData, setVehicleData] = useState([])
+  const [recommendations, setRecommendations] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [commandLoading, setCommandLoading] = useState(false)
+  const [copied, setCopied] = useState(false)
+
+  useEffect(() => {
+    fetchVehicleDetails()
+    fetchRecommendations()
+    
+    const interval = setInterval(fetchVehicleData, 10000) // Refresh every 10 seconds
+    return () => clearInterval(interval)
+  }, [deviceId])
+
+  const copyDeviceId = async () => {
+    try {
+      await navigator.clipboard.writeText(deviceId)
+      setCopied(true)
+      toast.success('Device ID copied to clipboard')
+      setTimeout(() => setCopied(false), 2000)
+    } catch (error) {
+      toast.error('Failed to copy Device ID')
+    }
+  }
+
+  const fetchVehicleDetails = async () => {
+    try {
+      const [vehiclesRes, dataRes] = await Promise.all([
+        vehicleAPI.getVehicles(),
+        vehicleAPI.getVehicleData(deviceId, { limit: 50, hours: 24 })
+      ])
+      
+      const foundVehicle = vehiclesRes.data.find(v => v.deviceId === deviceId)
+      setVehicle(foundVehicle)
+      setVehicleData(dataRes.data)
+    } catch (error) {
+      console.error('Error fetching vehicle details:', error)
+      toast.error('Failed to load vehicle details')
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const fetchVehicleData = async () => {
+    try {
+      const response = await vehicleAPI.getVehicleData(deviceId, { limit: 50, hours: 24 })
+      setVehicleData(response.data)
+    } catch (error) {
+      console.error('Error refreshing vehicle data:', error)
+    }
+  }
+
+  const fetchRecommendations = async () => {
+    try {
+      const response = await vehicleAPI.getRecommendations(deviceId)
+      setRecommendations(response.data.recommendations || [])
+    } catch (error) {
+      console.error('Error fetching recommendations:', error)
+    }
+  }
+
+  const sendCommand = async (command) => {
+    setCommandLoading(true)
+    try {
+      await vehicleAPI.sendCommand(deviceId, command)
+      toast.success(`Command sent: ${command}`)
+      setTimeout(fetchVehicleData, 2000) // Refresh data after 2 seconds
+    } catch (error) {
+      toast.error('Failed to send command')
+    } finally {
+      setCommandLoading(false)
+    }
+  }
+
+  if (loading) {
+    return <LoadingSpinner />
+  }
+
+  if (!vehicle) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <h2 className="text-2xl font-bold text-white mb-4">Vehicle not found</h2>
+          <button
+            onClick={() => navigate('/dashboard')}
+            className="px-6 py-3 rounded-xl text-white font-medium"
+            style={{ backgroundColor: '#FE5E41' }}
+          >
+            Back to Dashboard
+          </button>
+        </div>
+      </div>
+    )
+  }
+
+  const latestData = vehicleData[0]
+  const chartData = vehicleData.slice(0, 20).reverse().map((data, index) => ({
+    time: new Date(data.timestamp).toLocaleTimeString(),
+    temperature: data.engineTemp,
+    speed: data.speed,
+    fuel: data.fuelLevel
+  }))
+
+  return (
+    <div className="min-h-screen flex flex-col">
+      <Header />
+      
+      <div className="flex flex-1">
+        <Sidebar />
+        
+        <main className="flex-1 p-6 overflow-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            {/* Header */}
+            <div className="flex items-center justify-between mb-8">
+              <div className="flex items-center space-x-4">
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => navigate('/dashboard')}
+                  className="p-3 rounded-full glass hover:bg-white hover:bg-opacity-20 transition-colors"
+                >
+                  <ArrowLeft className="w-6 h-6 text-white" />
+                </motion.button>
+                <div>
+                  <h1 className="text-3xl font-bold text-white">{vehicle.name}</h1>
+                  <p className="text-gray-300">{vehicle.model} • {vehicle.year}</p>
+                  
+                  {/* ДОБАВИТЬ DEVICE ID С КНОПКОЙ КОПИРОВАНИЯ */}
+                  <div className="flex items-center space-x-2 mt-2">
+                    <span className="text-sm text-gray-400">Device ID:</span>
+                    <code className="text-sm text-white bg-white bg-opacity-10 px-2 py-1 rounded">
+                      {deviceId}
+                    </code>
+                    <motion.button
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.9 }}
+                      onClick={copyDeviceId}
+                      className="p-1 rounded hover:bg-white hover:bg-opacity-20 transition-colors"
+                      title="Copy Device ID"
+                    >
+                      {copied ? (
+                        <Check className="w-4 h-4 text-green-400" />
+                      ) : (
+                        <Copy className="w-4 h-4 text-gray-400 hover:text-white" />
+                      )}
+                    </motion.button>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="flex items-center space-x-3">
+                <div className={`px-3 py-1 rounded-full text-sm font-medium ${
+                  latestData && new Date() - new Date(latestData.timestamp) < 5 * 60 * 1000
+                    ? 'bg-green-500 bg-opacity-20 text-green-400'
+                    : 'bg-gray-500 bg-opacity-20 text-gray-400'
+                }`}>
+                  {latestData && new Date() - new Date(latestData.timestamp) < 5 * 60 * 1000 ? 'Online' : 'Offline'}
+                </div>
+              </div>
+            </div>
+
+            {/* Control Panel */}
+            <div className="glass rounded-2xl p-6 mb-8">
+              <h2 className="text-xl font-bold text-white mb-4">Vehicle Controls</h2>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={() => sendCommand('start_engine')}
+                  disabled={commandLoading || latestData?.engineRunning}
+                  className="flex items-center justify-center space-x-2 p-4 rounded-xl transition-colors disabled:opacity-50"
+                  style={{ 
+                    backgroundColor: latestData?.engineRunning ? '#878E88' : '#D8F1A0',
+                    color: '#403D58'
+                  }}
+                >
+                  <PlayCircle className="w-5 h-5" />
+                  <span className="font-medium">{t('startEngine')}</span>
+                </motion.button>
+
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={() => sendCommand('stop_engine')}
+                  disabled={commandLoading || !latestData?.engineRunning}
+                  className="flex items-center justify-center space-x-2 p-4 rounded-xl transition-colors disabled:opacity-50"
+                  style={{ 
+                    backgroundColor: !latestData?.engineRunning ? '#878E88' : '#FE5E41',
+                    color: 'white'
+                  }}
+                >
+                  <StopCircle className="w-5 h-5" />
+                  <span className="font-medium">{t('stopEngine')}</span>
+                </motion.button>
+
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={() => sendCommand('emergency_on')}
+                  disabled={commandLoading || latestData?.emergencyMode}
+                  className="flex items-center justify-center space-x-2 p-4 rounded-xl transition-colors disabled:opacity-50"
+                  style={{ 
+                    backgroundColor: latestData?.emergencyMode ? '#878E88' : '#FE5E41',
+                    color: 'white'
+                  }}
+                >
+                  <ShieldAlert className="w-5 h-5" />
+                  <span className="font-medium">{t('enableEmergency')}</span>
+                </motion.button>
+
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={() => sendCommand('emergency_off')}
+                  disabled={commandLoading || !latestData?.emergencyMode}
+                  className="flex items-center justify-center space-x-2 p-4 rounded-xl transition-colors disabled:opacity-50"
+                  style={{ 
+                    backgroundColor: !latestData?.emergencyMode ? '#878E88' : '#EFCEFA',
+                    color: '#403D58'
+                  }}
+                >
+                  <ShieldAlert className="w-5 h-5" />
+                  <span className="font-medium">{t('disableEmergency')}</span>
+                </motion.button>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+              {/* Current Status */}
+              <div className="lg:col-span-2 space-y-6">
+                {/* Status Cards */}
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.1 }}
+                    className="glass rounded-xl p-4"
+                  >
+                    <div className="flex items-center space-x-3">
+                      <Power className={`w-6 h-6 ${latestData?.engineRunning ? 'text-green-400' : 'text-gray-400'}`} />
+                      <div>
+                        <p className="text-sm text-gray-300">Engine</p>
+                        <p className="font-semibold text-white">
+                          {latestData?.engineRunning ? 'Running' : 'Stopped'}
+                        </p>
+                      </div>
+                    </div>
+                  </motion.div>
+
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.2 }}
+                    className="glass rounded-xl p-4"
+                  >
+                    <div className="flex items-center space-x-3">
+                      <Thermometer 
+                        className={`w-6 h-6 ${
+                          latestData?.engineTemp > 100 ? 'text-red-400' : 'text-blue-400'
+                        }`} 
+                      />
+                      <div>
+                        <p className="text-sm text-gray-300">{t('temperature')}</p>
+                        <p className="font-semibold text-white">
+                          {latestData?.engineTemp || 0}°C
+                        </p>
+                      </div>
+                    </div>
+                  </motion.div>
+
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.3 }}
+                    className="glass rounded-xl p-4"
+                  >
+                    <div className="flex items-center space-x-3">
+                      <Fuel 
+                        className={`w-6 h-6 ${
+                          latestData?.fuelLevel < 10 ? 'text-red-400' : 'text-green-400'
+                        }`} 
+                      />
+                      <div>
+                        <p className="text-sm text-gray-300">{t('fuelLevel')}</p>
+                        <p className="font-semibold text-white">
+                          {latestData?.fuelLevel || 0}%
+                        </p>
+                      </div>
+                    </div>
+                  </motion.div>
+
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.4 }}
+                    className="glass rounded-xl p-4"
+                  >
+                    <div className="flex items-center space-x-3">
+                      <Gauge className="w-6 h-6 text-blue-400" />
+                      <div>
+                        <p className="text-sm text-gray-300">{t('speed')}</p>
+                        <p className="font-semibold text-white">
+                          {latestData?.speed || 0} km/h
+                        </p>
+                      </div>
+                    </div>
+                  </motion.div>
+                </div>
+
+                {/* Charts */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.5 }}
+                  className="glass rounded-2xl p-6"
+                >
+                  <h3 className="text-xl font-bold text-white mb-4">Real-time Data</h3>
+                  <ResponsiveContainer width="100%" height={300}>
+                    <LineChart data={chartData}>
+                      <CartesianGrid strokeDasharray="3 3" stroke="#403D58" />
+                      <XAxis dataKey="time" stroke="#878E88" />
+                      <YAxis stroke="#878E88" />
+                      <Tooltip 
+                        contentStyle={{ 
+                          backgroundColor: '#403D58', 
+                          border: '1px solid #878E88',
+                          borderRadius: '12px'
+                        }} 
+                      />
+                      <Line 
+                        type="monotone" 
+                        dataKey="temperature" 
+                        stroke="#FE5E41" 
+                        strokeWidth={2}
+                        name="Temperature (°C)"
+                      />
+                      <Line 
+                        type="monotone" 
+                        dataKey="speed" 
+                        stroke="#D8F1A0" 
+                        strokeWidth={2}
+                        name="Speed (km/h)"
+                      />
+                      <Line 
+                        type="monotone" 
+                        dataKey="fuel" 
+                        stroke="#EFCEFA" 
+                        strokeWidth={2}
+                        name="Fuel (%)"
+                      />
+                    </LineChart>
+                  </ResponsiveContainer>
+                </motion.div>
+              </div>
+
+              {/* AI Recommendations */}
+              <div>
+                <motion.div
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.6 }}
+                  className="glass rounded-2xl p-6"
+                >
+                  <div className="flex items-center space-x-3 mb-4">
+                    <Brain className="w-6 h-6" style={{ color: '#D8F1A0' }} />
+                    <h3 className="text-xl font-bold text-white">AI Recommendations</h3>
+                  </div>
+                  
+                  <div className="space-y-3">
+                    {recommendations.map((recommendation, index) => (
+                      <motion.div
+                        key={index}
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.7 + index * 0.1 }}
+                        className="p-3 rounded-xl"
+                        style={{ backgroundColor: 'rgba(216, 241, 160, 0.1)' }}
+                      >
+                        <p className="text-sm text-white">{recommendation}</p>
+                      </motion.div>
+                    ))}
+                    
+                    {recommendations.length === 0 && (
+                      <div className="text-center py-8">
+                        <AlertTriangle className="w-12 h-12 mx-auto mb-3 text-gray-400" />
+                        <p className="text-gray-400">No recommendations available</p>
+                        <button
+                          onClick={fetchRecommendations}
+                          className="mt-2 text-sm font-medium hover:underline"
+                          style={{ color: '#D8F1A0' }}
+                        >
+                          Refresh Recommendations
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                </motion.div>
+              </div>
+            </div>
+          </motion.div>
+        </main>
+      </div>
+    </div>
+  )
+}
+
+export default VehicleDetails
+
+
+В.2 Адміністрування бізнес-логіки системи.
+GitHub репозиторій: 
+
+import { useState, useEffect } from 'react'
+import { motion } from 'framer-motion'
+import { useLanguage } from '../contexts/LanguageContext'
+import { analyticsAPI, vehicleAPI } from '../services/api'
+import Header from '../components/Header'
+import Sidebar from '../components/Sidebar'
+import LoadingSpinner from '../components/LoadingSpinner'
+import { 
+  BarChart, 
+  Bar, 
+  XAxis, 
+  YAxis, 
+  CartesianGrid, 
+  Tooltip, 
+  ResponsiveContainer,
+  PieChart,
+  Pie,
+  Cell,
+  LineChart,
+  Line
+} from 'recharts'
+import { 
+  Users, 
+  Car, 
+  AlertTriangle, 
+  Activity,
+  TrendingUp,
+  Database,
+  Shield,
+  Settings,
+  UserPlus,
+  Trash2,
+  Edit,
+  Search
+} from 'lucide-react'
+import toast from 'react-hot-toast'
+
+const AdminPanel = () => {
+  const { t } = useLanguage()
+  const [adminStats, setAdminStats] = useState(null)
+  const [users, setUsers] = useState([])
+  const [vehicles, setVehicles] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [activeTab, setActiveTab] = useState('overview')
+  const [searchTerm, setSearchTerm] = useState('')
+
+  useEffect(() => {
+    fetchAdminData()
+  }, [])
+
+  const fetchAdminData = async () => {
+    try {
+      const [statsRes, vehiclesRes] = await Promise.all([
+        analyticsAPI.getAdminStats(),
+        vehicleAPI.getVehicles()
+      ])
+      
+      setAdminStats(statsRes.data)
+      setVehicles(vehiclesRes.data)
+      
+      // Mock users data (you would get this from a real API)
+      setUsers([
+        { id: 1, username: 'admin', email: 'admin@example.com', role: 'admin', status: 'active', vehicles: 2 },
+        { id: 2, username: 'user1', email: 'user1@example.com', role: 'user', status: 'active', vehicles: 1 },
+        { id: 3, username: 'user2', email: 'user2@example.com', role: 'user', status: 'inactive', vehicles: 0 }
+      ])
+    } catch (error) {
+      console.error('Error fetching admin data:', error)
+      toast.error('Failed to load admin data')
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  if (loading) {
+    return <LoadingSpinner />
+  }
+
+  const overviewStats = [
+    {
+      title: 'Total Users',
+      value: users.length,
+      icon: Users,
+      color: '#D8F1A0',
+      change: '+12%'
+    },
+    {
+      title: t('totalVehicles'),
+      value: adminStats?.totalVehicles || 0,
+      icon: Car,
+      color: '#FE5E41',
+      change: '+8%'
+    },
+    {
+      title: t('activeVehicles'),
+      value: adminStats?.activeVehicles || 0,
+      icon: Activity,
+      color: '#EFCEFA',
+      change: '+5%'
+    },
+    {
+      title: 'Total Alerts',
+      value: adminStats?.totalAlerts || 0,
+      icon: AlertTriangle,
+      color: '#878E88',
+      change: '-3%'
+    }
+  ]
+
+  const chartData = [
+    { name: 'Mon', users: 12, vehicles: 8, alerts: 3 },
+    { name: 'Tue', users: 15, vehicles: 12, alerts: 5 },
+    { name: 'Wed', users: 8, vehicles: 15, alerts: 2 },
+    { name: 'Thu', users: 20, vehicles: 18, alerts: 7 },
+    { name: 'Fri', users: 25, vehicles: 22, alerts: 4 },
+    { name: 'Sat', users: 18, vehicles: 16, alerts: 6 },
+    { name: 'Sun', users: 14, vehicles: 10, alerts: 1 }
+  ]
+
+  const pieData = [
+    { name: 'Active Users', value: users.filter(u => u.status === 'active').length, color: '#D8F1A0' },
+    { name: 'Inactive Users', value: users.filter(u => u.status === 'inactive').length, color: '#878E88' }
+  ]
+
+  const filteredUsers = users.filter(user =>
+    user.username.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    user.email.toLowerCase().includes(searchTerm.toLowerCase())
+  )
+
+  const tabs = [
+    { id: 'overview', label: 'Overview', icon: TrendingUp },
+    { id: 'users', label: t('userManagement'), icon: Users },
+    { id: 'vehicles', label: 'Vehicle Management', icon: Car },
+    { id: 'system', label: 'System Settings', icon: Settings }
+  ]
+
+  return (
+    <div className="min-h-screen flex flex-col">
+      <Header />
+      
+      <div className="flex flex-1">
+        <Sidebar />
+        
+        <main className="flex-1 p-6 overflow-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            {/* Header */}
+            <div className="flex items-center justify-between mb-8">
+              <div>
+                <h1 className="text-3xl font-bold text-white mb-2">
+                  {t('admin')} 🛡️
+                </h1>
+                <p className="text-gray-300">
+                  System administration and user management
+                </p>
+              </div>
+              
+              <div className="flex items-center space-x-3">
+                <Shield className="w-8 h-8" style={{ color: '#FE5E41' }} />
+                <span className="text-white font-medium">Admin Mode</span>
+              </div>
+            </div>
+
+            {/* Tabs */}
+            <div className="glass rounded-2xl p-2 mb-8">
+              <div className="flex space-x-2">
+                {tabs.map(tab => (
+                  <motion.button
+                    key={tab.id}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    onClick={() => setActiveTab(tab.id)}
+                    className={`flex items-center space-x-2 px-6 py-3 rounded-xl font-medium transition-colors ${
+                      activeTab === tab.id
+                        ? 'text-white'
+                        : 'text-gray-300 hover:text-white hover:bg-white hover:bg-opacity-10'
+                    }`}
+                    style={activeTab === tab.id ? { backgroundColor: '#FE5E41' } : {}}
+                  >
+                    <tab.icon className="w-5 h-5" />
+                    <span>{tab.label}</span>
+                  </motion.button>
+                ))}
+              </div>
+            </div>
+
+            {/* Overview Tab */}
+            {activeTab === 'overview' && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4 }}
+                className="space-y-8"
+              >
+                {/* Stats Cards */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                  {overviewStats.map((stat, index) => (
+                    <motion.div
+                      key={stat.title}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: index * 0.1 }}
+                      className="glass rounded-2xl p-6"
+                    >
+                      <div className="flex items-center justify-between mb-4">
+                        <div 
+                          className="p-3 rounded-full"
+                          style={{ backgroundColor: `${stat.color}20` }}
+                        >
+                          <stat.icon 
+                            className="w-6 h-6" 
+                            style={{ color: stat.color }} 
+                          />
+                        </div>
+                        <span 
+                          className="text-sm font-medium"
+                          style={{ color: stat.change.startsWith('+') ? '#D8F1A0' : '#FE5E41' }}
+                        >
+                          {stat.change}
+                        </span>
+                      </div>
+                      <p className="text-gray-300 text-sm mb-1">{stat.title}</p>
+                      <p className="text-3xl font-bold text-white">{stat.value}</p>
+                    </motion.div>
+                  ))}
+                </div>
+
+                {/* Charts */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.5 }}
+                    className="glass rounded-2xl p-6"
+                  >
+                    <h3 className="text-xl font-bold text-white mb-4">Weekly Activity</h3>
+                    <ResponsiveContainer width="100%" height={300}>
+                      <BarChart data={chartData}>
+                        <CartesianGrid strokeDasharray="3 3" stroke="#403D58" />
+                        <XAxis dataKey="name" stroke="#878E88" />
+                        <YAxis stroke="#878E88" />
+                        <Tooltip 
+                          contentStyle={{ 
+                            backgroundColor: '#403D58', 
+                            border: '1px solid #878E88',
+                            borderRadius: '12px'
+                          }} 
+                        />
+                        <Bar dataKey="users" fill="#D8F1A0" radius={[4, 4, 0, 0]} />
+                        <Bar dataKey="vehicles" fill="#FE5E41" radius={[4, 4, 0, 0]} />
+                        <Bar dataKey="alerts" fill="#EFCEFA" radius={[4, 4, 0, 0]} />
+                      </BarChart>
+                    </ResponsiveContainer>
+                  </motion.div>
+
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.6 }}
+                    className="glass rounded-2xl p-6"
+                  >
+                    <h3 className="text-xl font-bold text-white mb-4">User Distribution</h3>
+                    <ResponsiveContainer width="100%" height={300}>
+                      <PieChart>
+                        <Pie
+                          data={pieData}
+                          cx="50%"
+                          cy="50%"
+                          innerRadius={60}
+                          outerRadius={120}
+                          paddingAngle={5}
+                          dataKey="value"
+                        >
+                          {pieData.map((entry, index) => (
+                            <Cell key={`cell-${index}`} fill={entry.color} />
+                          ))}
+                        </Pie>
+                        <Tooltip 
+                          contentStyle={{ 
+                            backgroundColor: '#403D58', 
+                            border: '1px solid #878E88',
+                            borderRadius: '12px'
+                          }} 
+                        />
+                      </PieChart>
+                    </ResponsiveContainer>
+                    <div className="flex justify-center space-x-6 mt-4">
+                      {pieData.map((item, index) => (
+                        <div key={index} className="flex items-center space-x-2">
+                          <div 
+                            className="w-3 h-3 rounded-full"
+                            style={{ backgroundColor: item.color }}
+                          />
+                          <span className="text-sm text-gray-300">{item.name}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </motion.div>
+                </div>
+              </motion.div>
+            )}
+
+            {/* Users Tab */}
+            {activeTab === 'users' && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4 }}
+                className="space-y-6"
+              >
+                {/* Search and Actions */}
+                <div className="flex justify-between items-center">
+                  <div className="relative">
+                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+                    <input
+                      type="text"
+                      placeholder="Search users..."
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                      className="pl-10 pr-4 py-3 rounded-xl glass border-0 text-white placeholder-gray-300 focus:ring-2 focus:ring-coral outline-none w-80"
+                      style={{ backgroundColor: 'rgba(64, 61, 88, 0.3)' }}
+                    />
+                  </div>
+                  
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="flex items-center space-x-2 px-6 py-3 rounded-xl text-white font-medium"
+                    style={{ backgroundColor: '#FE5E41' }}
+                  >
+                    <UserPlus className="w-5 h-5" />
+                    <span>Add User</span>
+                  </motion.button>
+                </div>
+
+                {/* Users Table */}
+                <div className="glass rounded-2xl overflow-hidden">
+                  <div className="overflow-x-auto">
+                    <table className="w-full">
+                      <thead>
+                        <tr className="border-b border-white border-opacity-10">
+                          <th className="text-left p-6 text-gray-300 font-medium">User</th>
+                          <th className="text-left p-6 text-gray-300 font-medium">Email</th>
+                          <th className="text-left p-6 text-gray-300 font-medium">Role</th>
+                          <th className="text-left p-6 text-gray-300 font-medium">Status</th>
+                          <th className="text-left p-6 text-gray-300 font-medium">Vehicles</th>
+                          <th className="text-left p-6 text-gray-300 font-medium">Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {filteredUsers.map((user, index) => (
+                          <motion.tr
+                            key={user.id}
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: index * 0.1 }}
+                            className="border-b border-white border-opacity-5 hover:bg-white hover:bg-opacity-5 transition-colors"
+                          >
+                            <td className="p-6">
+                              <div className="flex items-center space-x-3">
+                                <div 
+                                  className="w-10 h-10 rounded-full flex items-center justify-center"
+                                  style={{ backgroundColor: '#D8F1A020' }}
+                                >
+                                  <span className="text-white font-medium">
+                                    {user.username.charAt(0).toUpperCase()}
+                                  </span>
+                                </div>
+                                <span className="text-white font-medium">{user.username}</span>
+                              </div>
+                            </td>
+                            <td className="p-6 text-gray-300">{user.email}</td>
+                            <td className="p-6">
+                              <span 
+                                className="px-3 py-1 rounded-full text-sm font-medium"
+                                style={{
+                                  backgroundColor: user.role === 'admin' ? '#FE5E4120' : '#D8F1A020',
+                                  color: user.role === 'admin' ? '#FE5E41' : '#D8F1A0'
+                                }}
+                              >
+                                {user.role}
+                              </span>
+                            </td>
+                            <td className="p-6">
+                              <span 
+                                className="px-3 py-1 rounded-full text-sm font-medium"
+                                style={{
+                                  backgroundColor: user.status === 'active' ? '#D8F1A020' : '#878E8820',
+                                  color: user.status === 'active' ? '#D8F1A0' : '#878E88'
+                                }}
+                              >
+                                {user.status}
+                              </span>
+                            </td>
+                            <td className="p-6 text-white">{user.vehicles}</td>
+                            <td className="p-6">
+                              <div className="flex items-center space-x-2">
+                                <motion.button
+                                  whileHover={{ scale: 1.1 }}
+                                  whileTap={{ scale: 0.9 }}
+                                  className="p-2 rounded-lg hover:bg-white hover:bg-opacity-10 transition-colors"
+                                >
+                                  <Edit className="w-4 h-4 text-gray-400 hover:text-white" />
+                                </motion.button>
+                                <motion.button
+                                  whileHover={{ scale: 1.1 }}
+                                  whileTap={{ scale: 0.9 }}
+                                  className="p-2 rounded-lg hover:bg-red-500 hover:bg-opacity-20 transition-colors"
+                                >
+                                  <Trash2 className="w-4 h-4 text-gray-400 hover:text-red-400" />
+                                </motion.button>
+                              </div>
+                            </td>
+                          </motion.tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </motion.div>
+            )}
+
+            {/* Vehicles Tab */}
+            {activeTab === 'vehicles' && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4 }}
+                className="space-y-6"
+              >
+                <div className="glass rounded-2xl p-6">
+                  <h3 className="text-xl font-bold text-white mb-4">All Vehicles</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {vehicles.map((vehicle, index) => (
+                      <motion.div
+                        key={vehicle._id}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: index * 0.1 }}
+                        className="p-4 rounded-xl"
+                        style={{ backgroundColor: 'rgba(255, 255, 255, 0.05)' }}
+                      >
+                        <div className="flex items-center justify-between mb-3">
+                          <h4 className="font-semibold text-white">{vehicle.name}</h4>
+                          <div className={`w-3 h-3 rounded-full ${
+                            vehicle.status === 'active' ? 'bg-green-400' : 'bg-gray-400'
+                          }`} />
+                        </div>
+                        <p className="text-sm text-gray-300 mb-2">{vehicle.model} • {vehicle.year}</p>
+                        <p className="text-xs text-gray-400">Device: {vehicle.deviceId}</p>
+                        <p className="text-xs text-gray-400">Last seen: {new Date(vehicle.lastSeen).toLocaleString()}</p>
+                      </motion.div>
+                    ))}
+                  </div>
+                </div>
+              </motion.div>
+            )}
+
+            {/* System Tab */}
+            {activeTab === 'system' && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4 }}
+                className="space-y-6"
+              >
+                <div className="glass rounded-2xl p-6">
+                  <h3 className="text-xl font-bold text-white mb-4">System Configuration</h3>
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between p-4 rounded-xl" style={{ backgroundColor: 'rgba(255, 255, 255, 0.05)' }}>
+                      <div>
+                        <h4 className="font-medium text-white">MQTT Broker Status</h4>
+                        <p className="text-sm text-gray-300">broker.hivemq.com</p>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <div className="w-3 h-3 bg-green-400 rounded-full" />
+                        <span className="text-green-400 text-sm">Connected</span>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center justify-between p-4 rounded-xl" style={{ backgroundColor: 'rgba(255, 255, 255, 0.05)' }}>
+                      <div>
+                        <h4 className="font-medium text-white">Database Status</h4>
+                        <p className="text-sm text-gray-300">MongoDB Atlas</p>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <div className="w-3 h-3 bg-green-400 rounded-full" />
+                        <span className="text-green-400 text-sm">Connected</span>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center justify-between p-4 rounded-xl" style={{ backgroundColor: 'rgba(255, 255, 255, 0.05)' }}>
+                      <div>
+                        <h4 className="font-medium text-white">AI Service</h4>
+                        <p className="text-sm text-gray-300">Google Gemini API</p>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <div className="w-3 h-3 bg-green-400 rounded-full" />
+                        <span className="text-green-400 text-sm">Available</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="glass rounded-2xl p-6">
+                  <h3 className="text-xl font-bold text-white mb-4">System Metrics</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div className="text-center">
+                      <Database className="w-8 h-8 mx-auto mb-2" style={{ color: '#D8F1A0' }} />
+                      <p className="text-2xl font-bold text-white">99.9%</p>
+                      <p className="text-sm text-gray-300">Uptime</p>
+                    </div>
+                    <div className="text-center">
+                      <Activity className="w-8 h-8 mx-auto mb-2" style={{ color: '#FE5E41' }} />
+                      <p className="text-2xl font-bold text-white">45ms</p>
+                      <p className="text-sm text-gray-300">Avg Response</p>
+                    </div>
+                    <div className="text-center">
+                      <TrendingUp className="w-8 h-8 mx-auto mb-2" style={{ color: '#EFCEFA' }} />
+                      <p className="text-2xl font-bold text-white">2.1GB</p>
+                      <p className="text-sm text-gray-300">Data Storage</p>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </motion.div>
+        </main>
+      </div>
+    </div>
+  )
+}
+
+export default AdminPanel
+1	
