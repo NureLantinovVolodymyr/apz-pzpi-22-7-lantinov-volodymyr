@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="accent_green">#D8F1A0</color>
+    <color name="accent_purple">#EFCEFA</color>
+    <color name="accent_red">#FE5E41</color>
+    <color name="black">#000000</color>
+    <color name="gray_light">#F5F5F5</color>
+    <color name="primary_dark">#403D58</color>
+    <color name="primary_light">#878E88</color>
+    <color name="status_active">#D8F1A0</color>
+    <color name="status_critical">#FE5E41</color>
+    <color name="status_warning">#EFCEFA</color>
+    <color name="white">#FFFFFF</color>
+    <string name="add_access">Add Access / Додати доступ</string>
+    <string name="add_vehicle">Add Vehicle / Додати ТЗ</string>
+    <string name="alerts">Alerts / Сповіщення</string>
+    <string name="app_name">Vehicle Monitor</string>
+    <string name="device_id">Device ID</string>
+    <string name="dismiss">Dismiss / Відхилити</string>
+    <string name="email">Email</string>
+    <string name="emergency_mode">Emergency Mode / Аварійний режим</string>
+    <string name="engine_temp">Engine Temp / Температура двигуна</string>
+    <string name="error">Error / Помилка</string>
+    <string name="fuel_level">Fuel Level / Рівень палива</string>
+    <string name="last_seen">Last Seen / Остання активність</string>
+    <string name="loading">Loading... / Завантаження...</string>
+    <string name="login">Login / Увійти</string>
+    <string name="my_vehicles">My Vehicles / Мої Транспортні Засоби</string>
+    <string name="no_alerts">No alerts / Немає сповіщень</string>
+    <string name="owner_password">Owner Password / Пароль власника</string>
+    <string name="password">Password / Пароль</string>
+    <string name="refresh">Refresh / Оновити</string>
+    <string name="register">Register / Реєстрація</string>
+    <string name="register_new">Register New / Зареєструвати новий</string>
+    <string name="resolve">Resolve / Вирішити</string>
+    <string name="send_command">Send Command / Надіслати команду</string>
+    <string name="speed">Speed / Швидкість</string>
+    <string name="start_engine">Start Engine / Запустити двигун</string>
+    <string name="status">Status / Статус</string>
+    <string name="stop_engine">Stop Engine / Зупинити двигун</string>
+    <string name="success">Success / Успішно</string>
+    <string name="username">Username / Ім\'я користувача</string>
+    <string name="vehicle_name">Vehicle Name / Назва ТЗ</string>
+    <string name="welcome">Welcome / Вітаємо</string>
+    <style name="ChipTextStyle">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/primary_dark</item>
+        <item name="android:padding">8dp</item>
+        <item name="android:background">@drawable/bg_chip</item>
+    </style>
+    <style name="Theme.VehicleMonitor" parent="Theme.Material3.DayNight">
+        
+        <item name="colorPrimary">@color/accent_green</item>
+        <item name="colorPrimaryVariant">@color/primary_dark</item>
+        <item name="colorOnPrimary">@color/white</item>
+
+        
+        <item name="colorSecondary">@color/accent_purple</item>
+        <item name="colorSecondaryVariant">@color/primary_light</item>
+        <item name="colorOnSecondary">@color/black</item>
+
+        
+        <item name="android:statusBarColor">@color/primary_dark</item>
+
+        
+        <item name="android:colorBackground">@color/gray_light</item>
+        <item name="colorSurface">@color/white</item>
+
+        
+        <item name="android:textColorPrimary">@color/primary_dark</item>
+        <item name="android:textColorSecondary">@color/primary_light</item>
+
+        
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+    </style>
+    <style name="Theme.VehicleMonitor.NoActionBar" parent="Theme.VehicleMonitor">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+</resources>
