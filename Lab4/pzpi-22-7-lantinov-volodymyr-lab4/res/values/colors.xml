@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primary_dark">#403D58</color>
+    <color name="primary_light">#878E88</color>
+    <color name="accent_purple">#EFCEFA</color>
+    <color name="accent_green">#D8F1A0</color>
+    <color name="accent_red">#FE5E41</color>
+
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="gray_light">#F5F5F5</color>
+
+    <!-- Status colors -->
+    <color name="status_active">#D8F1A0</color>
+    <color name="status_warning">#EFCEFA</color>
+    <color name="status_critical">#FE5E41</color>
+</resources>

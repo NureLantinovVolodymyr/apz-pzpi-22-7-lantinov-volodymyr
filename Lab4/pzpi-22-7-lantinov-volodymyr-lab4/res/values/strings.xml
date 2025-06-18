@@ -1,0 +1,45 @@
+<resources>
+    <string name="app_name">Vehicle Monitor</string>
+
+    <!-- Auth -->
+    <string name="login">Login / Увійти</string>
+    <string name="register">Register / Реєстрація</string>
+    <string name="email">Email</string>
+    <string name="password">Password / Пароль</string>
+    <string name="username">Username / Ім\'я користувача</string>
+    <string name="welcome">Welcome / Вітаємо</string>
+
+    <!-- Vehicles -->
+    <string name="my_vehicles">My Vehicles / Мої Транспортні Засоби</string>
+    <string name="vehicle_name">Vehicle Name / Назва ТЗ</string>
+    <string name="device_id">Device ID</string>
+    <string name="add_vehicle">Add Vehicle / Додати ТЗ</string>
+    <string name="register_new">Register New / Зареєструвати новий</string>
+    <string name="add_access">Add Access / Додати доступ</string>
+    <string name="owner_password">Owner Password / Пароль власника</string>
+
+    <!-- Vehicle Details -->
+    <string name="engine_temp">Engine Temp / Температура двигуна</string>
+    <string name="fuel_level">Fuel Level / Рівень палива</string>
+    <string name="speed">Speed / Швидкість</string>
+    <string name="status">Status / Статус</string>
+    <string name="last_seen">Last Seen / Остання активність</string>
+
+    <!-- Alerts -->
+    <string name="alerts">Alerts / Сповіщення</string>
+    <string name="no_alerts">No alerts / Немає сповіщень</string>
+    <string name="dismiss">Dismiss / Відхилити</string>
+    <string name="resolve">Resolve / Вирішити</string>
+
+    <!-- Commands -->
+    <string name="send_command">Send Command / Надіслати команду</string>
+    <string name="start_engine">Start Engine / Запустити двигун</string>
+    <string name="stop_engine">Stop Engine / Зупинити двигун</string>
+    <string name="emergency_mode">Emergency Mode / Аварійний режим</string>
+
+    <!-- General -->
+    <string name="loading">Loading... / Завантаження...</string>
+    <string name="error">Error / Помилка</string>
+    <string name="success">Success / Успішно</string>
+    <string name="refresh">Refresh / Оновити</string>
+</resources>
